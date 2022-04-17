@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+
+<body>
+    <!-- 
+        条件渲染：
+                1.v-if写法：
+                    (1)v-if='表达式'
+                    (2)v--else-if='表达式'
+                    (3)v-else='表达式'
+                适用于： 切换频率较低的场景
+                特点： 不展示的DOM元素直接被移除
+                注意： v-if可以和v-else-if 以及v-else一起使用 但要求结构不能被打断
+
+                2.v-show写法
+                    （2）v-show='表达式'
+                    适用于：切换频率较高的场景
+                    特点：不展示的DOM元素未被移除，仅仅是使用的样式被隐藏掉
+                3.备注：使用v-if时，元素可能无法获取到，而使用v-show一定可以获取到
+    -->
+    <div id="root">
+        <!-- v-show 就是display:none 不会删除元素 -->
+        <!-- <h1 v-show="true">今天心情美美哒</h1>
+        <h1 v-show="1 === 1">今天心情美美哒</h1>
+        <h1 v-show="isShow">今天心情美美哒</h1> -->
+        <br>
+        <!-- v-if 会删除元素 -->
+        <!-- <button @click="addN">点我n+1</button>
+        <h1 v-if="n === 1">今天心情美美哒1</h1>
+        <h1 v-else-if="n === 2">今天心情美美哒2</h1>
+        <h1 v-else-if="n === 3">今天心情美美哒3</h1>
+        <h1 v-else>今天心情美美哒4</h1> -->
+
+        <!-- v-if和template的配合使用 -->
+        <template v-if="n">
+            <h1 >今天心情美美哒1</h1>
+            <h1 >今天心情美美哒1</h1>
+            <h1 >今天心情美美哒1</h1>
+            <h1 >今天心情美美哒1</h1>
+        </template>
+
+    </div>
+
+    <script type='text/javascript'>
+        new Vue({
+            el: '#root',
+            data: {
+                isShow: false,
+                n: 1
+            },
+            methods: {
+                addN() {
+                    this.n++
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

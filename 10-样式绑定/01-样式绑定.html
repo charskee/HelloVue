@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+    <style>
+        .basic {
+            width: 300px;
+            height: 100px;
+            border: 1px solid #666;
+        }
+        .yellow {
+            background-color: antiquewhite;
+            border: 2px solid yellow;
+        }
+        .blue {
+            background-color: blue;
+            border: 2px solid black;
+        }
+        .green {
+            background-color: chartreuse;
+            border: 2px solid orange;
+        }
+        .chars1 {
+            font-size: 30px;
+        }
+        .chars2 {
+            background-color: palevioletred;
+            border: 5px solid red;
+        }
+        .chars3 {
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        绑定样式：
+                1.class样式：
+                    写法： :class='xxx'  xxx可以是字符串 数组 对象
+                        字符串写法适用于：类名不确定，要动态获取
+                        数组写法适用于：要绑定多个样式，个数不确定，名字也不确定
+                        对象写法适用于：要绑定多个样式，个数确定，名字确定，但不确定用不用
+                2.style样式：
+                    :style='{fontSize:xxx}' 其中xxx是动态值
+                    :style='[a,b]' 其中a b是样式对象
+    -->
+    <div id="root">
+        <!-- 绑定class样式--字符串写法， 适用于：样式的类名不确定，需要动态决定 -->
+        <div class="basic" :class="color" @click="changeColor"><span>chars</span></div><br>
+
+        <!-- 绑定class样式--数组写法， 适用于：要绑定的样式的个数不确定。名字也不确定 -->
+        <div class="basic" :class="classArr" @click="addStyle"><span>chars</span></div><br>
+
+        <!-- 绑定class样式--对象写法， 适用于：要绑定的样式的个数确定。名字也确定 但要动态决定用不用-->
+        <div class="basic" :class="classObj"><span>chars</span></div><br>
+        <button @click="useClass1">应用/取消样式1</button> <button @click="useClass2">应用/取消样式2</button><br><br>
+
+        <!-- 绑定内联样式--对象写法  -->
+        <div class="basic" :style="{fontSize:fSize+'px'}" @click="changeFsize"><span>chars</span></div><br>
+    </div>
+
+    <script type='text/javascript'>
+        new Vue({
+            el:'#root',
+            data:{
+                color:"yellow",
+                classArr:[],
+                classObj:{
+                    chars2:true,
+                    chars3:false
+                },
+                fSize:40
+            },
+            methods: {
+                changeColor(){
+                    const arr = ['yellow','green','blue']
+                    const index = Math.floor(Math.random()*3)
+                    this.color = arr[index]
+                },
+                addStyle(){
+                    if (!this.classArr[0]) {
+                        this.classArr.push('chars1')
+                    }else if(!this.classArr[1]){
+                        this.classArr.push('chars2')
+                    }else if(!this.classArr[2]){
+                        this.classArr.push('chars3')
+                    }else{
+                        this.classArr = []
+                    }
+                },
+                useClass1(){
+                    this.classObj.chars2 = !this.classObj.chars2
+                },
+                useClass2(){
+                    this.classObj.chars3 = !this.classObj.chars3
+                },
+                changeFsize(){
+                    this.fSize++
+                }
+            },
+        })
+    </script>
+</body>
+</html>

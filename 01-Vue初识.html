@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue初识</title>
+    <!-- // 引入vue -->
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        初识Vue：
+            1.想让Vue工作，就必须创建一个Vue实例，且要传入一个配置对象
+            2.root容器里面的代码依然符合html规范，只不过混入了一些特殊的vue语法
+            3.root容器里的代码被称为「 Vue模版 」
+            4.一个容器只能对应一个Vue实例
+            5.容器里面{{}}里面必须是表达式，即一个有值的js表达式
+            6.容器里面可以写多个数据 把要管理的数据交给Vue实例
+            7.真实开发中只会有一个Vue实例，并且会配合着组件一起使用
+            8.{{xxx}}中会读取data中的所有属性 并且data的数据发生改变 模板中用到的地方也会自动更新
+    -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h1>Hello {{name.toUpperCase()}}! 来自{{adress}} {{Date.now()}}</h1>
+    </div>
+    <script>
+        Vue.config.productionTip = false // 设置为 false 以阻止 vue 在启动时生成生产提示。
+        // 创建Vue实例
+        new Vue({
+            el:'#root',  // el用于指定当前Vue实例为哪个容器服务 值通常为css选择器字符串
+            data:{
+                name:'chars',  // data中用于存储数据，数据供el所指定的容器去使用，值我们暂时先写成一个对象
+                adress: '广东茂名'
+            }
+        })
+        let name = 'adsd'
+        
+    </script>
+</body>
+</html>

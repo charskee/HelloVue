@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <div id="root">
+        <h1>学生信息</h1>
+        <button @click="add">给学生增加一个性别属性，默认为男</button>
+        <button v-if="studentMsg.hasOwnProperty('sex')" @click="change">变换性别</button>
+        <h4>姓名{{studentMsg.name}}</h4>
+        <h4>年龄{{studentMsg.age}}</h4>
+        <h4 v-if="studentMsg.hasOwnProperty('sex')">年龄{{studentMsg.sex?"男":"女"}}</h4>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                studentMsg:{
+                    name:"chars",
+                    age:19
+                },
+                school:[]
+            },
+            methods: {
+                add(){
+                    // Vue.set(this.studentMsg,"sex",'男')
+                    this.$set(this.studentMsg,'sex',true)
+                },
+                change(){
+                    this.studentMsg.sex = !this.studentMsg.sex
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+    <style>
+        *{
+            margin-top: 20px;
+        }
+        .d1 {
+            width: 500px;
+            height: 100px;
+            background-color: antiquewhite;
+        }
+        ul {
+            width: 300px;
+            height: 200px;
+            background-color: burlywood;
+            overflow: scroll;
+        }
+        li {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        Vue中的事件修饰符：
+                    1.prevent: 阻止默认事件（常用）
+                    2.stop: 阻止事件冒泡（常用）
+                    3.once: 事件只触发一次（常用）
+                    4.capture: 使用事件的捕获模式
+                    5.self: 只有event.target是当前操作的元素时才触发事件
+                    6.passive: 事件的默认行为立即执行，无需等待事件回调执行完毕
+            注意。事件修饰符 可以组合使用 比如 @click.prevent.stop
+    -->
+    <div id="root">
+        <h1>Hello {{name}}!</h1>
+        <!-- prevent: 阻止默认事件（常用） -->
+        <a href="https://www.bilibili.com" @click.prevent="showInfo">点我触发事件</a>
+
+        <!-- stop: 阻止事件冒泡（常用） -->
+        <div class="d1">
+            <button @click.stop="showInfo">点我触发事件1</button>
+        </div>
+
+        <!-- once: 事件只触发一次（常用） -->
+        <div class="d1">
+            <button @click.once="showInfo">点我触发事件2</button>
+        </div>
+
+        <!-- capture: 使用事件的捕获模式 -->
+        <!-- 正常情况下点了按钮会先调用按钮的回调函数 再调用div的回调函数 因为事件处于冒泡模式 -->
+        <!-- 当我们给div事件使用了capture 那这个div的事件 捕获阶段就开始执行了 所以点了按钮先执行了div的事件回调函数 -->
+        <div class="d1" @click.capture="showMsg('div')">
+            <button @click="showMsg('btn')">点我触发事件3</button>
+        </div>
+
+        <!-- self: 只有event.target是当前操作的元素时才触发事件 -->
+        <!-- 正常情况下由于事件冒泡 点击btn会导致div也触发事件  -->
+        <!-- 如果给div加上.self 就表示只有当你点的是div的时候 才会调用div的事件回调函数 -->
+        <div class="d1" @click.self="showMsg('div')">
+            <button @click="showMsg('btn')">点我触发事件4</button>
+        </div>
+
+        <!-- passive: 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+        <!-- @wheel 滚轮滚动事件只有滚轮滚动才会调用 @scroll页面内容滚动就会调用 -->
+        <!-- 此例子中事件的调用函数walk 运算非常慢 会导致会在运算完之后页面内容才会滚动 所以加了passive优化 -->
+        <ul @wheel.passive="walk">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        new Vue({
+            el:'#root',
+            data:{
+                name:"chars"
+            },
+            methods:{
+                showInfo(e){
+                    console.log('GOD');
+                },
+                showMsg(v){
+                    console.log(v);
+                },
+                walk(){
+                    // console.log(123);
+                    for (let i = 0; i < 100000; i++) {
+                        console.log("##");
+                    }
+                }
+            }
+        })
+        
+        
+    </script>
+</body>
+</html>

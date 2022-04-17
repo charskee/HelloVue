@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        v-for指令：
+                1.用于展示列表数据
+                2.语法：v-for="(item,index) in/of xxx" :key="yyy"
+                .可遍历 数组 对象 字符串 指定次数 一般用于遍历数组和对象
+    -->
+    <div id="root">
+        <!-- 数组遍历  常用-->
+        <h1>人员列表1</h1>
+        <ul>
+            <li v-for="person in persons" ::key="person.id">
+                {{person.name}}--{{person.age}}
+            </li>
+        </ul>
+        <!-- 数组遍历2 -->
+        <h1>人员列表2</h1>
+        <ul>
+            <li v-for="(person,index) in persons" ::key="index">
+                {{index}}--{{person}}
+            </li>
+        </ul>
+
+        <!-- 对象遍历 -->
+        <h1>汽车信息</h1>
+        <ul>
+            <li v-for="(value,key,index) in car" ::key="index" >
+                {{index}}--{{key}}---{{value}}
+            </li>
+        </ul>
+
+        <!-- 字符串遍历  少用-->
+        <h1>字符串遍历</h1>
+        <ul>
+            <li v-for="(char,index) in str" ::key="index" >
+                {{index}}--{{char}}
+            </li>
+        </ul>
+
+        <!-- 遍历指定次数  少用-->
+        <h1>遍历指定次数</h1>
+        <ul>
+            <li v-for="(number,index) in 10" ::key="index" >
+                {{index}}--{{number}}
+            </li>
+        </ul>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+
+        new Vue({
+            el:'#root',
+            data:{
+                persons:[
+                    {id:"001",name:"张三",age:19},
+                    {id:"002",name:"李四",age:20},
+                    {id:"003",name:"王五",age:21},
+                ],
+                car:{
+                    logo:"Mazda",
+                    price:"17万",
+                    color:"铂钢灰"
+                },
+                str:"Hello"
+            }
+        })
+    </script>
+</body>
+</html>

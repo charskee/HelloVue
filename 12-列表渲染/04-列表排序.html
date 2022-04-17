@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        排序思路
+            不再是以前点击某个事件写逻辑
+            而是根据点击后选择的状态 去维护filPersons的变化
+            也就是说 不是命令式编码 而是面向对象的思想 
+
+    -->
+    <div id="root">
+        <h1>明星列表</h1>
+        <input type="text" placeholder="请输入名字搜索" v-model="searchName" @keydown.enter="search">
+        <button @click="search">搜索</button>
+        <button @click="sortType = 2">年龄升序</button>
+        <button @click="sortType = 1">年龄降序</button>
+        <button @click="sortType = 0">原顺序</button>
+        <ul>
+            <li v-for="person in filPersons" :key="person.id">{{person.name}}-{{person.age}}</li>
+        </ul>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        new Vue({
+            el:'#root',
+            data:{
+                persons: [
+                    { id: "001", name: "周杰伦", age: 1 },
+                    { id: "002", name: "温兆伦", age: 3 },
+                    { id: "003", name: "马冬梅", age: 4 },
+                    { id: "004", name: "周冬雨", age: 2 },
+                ],
+                searchName:'',
+                sortType:0,
+            },
+            watch: {
+
+            },
+            methods: {
+                //点击搜索实现搜索 思路 当点击搜索按钮的时候 拿到搜索框的value 去匹配数据
+                search() {
+                    console.log('search被调用了');
+                    this.filPersons = this.persons.filter((p) => {
+                        return p.name.indexOf(this.searchName) != -1
+                    })
+                }
+            },
+            computed:{
+                // 计算属性实现搜索  当计算属性所依赖的属性(搜索框的内容)发生变化时 拿到搜索框的内容去匹配数据
+                filPersons(){
+                    console.log('filPersons被调用了');
+                    let arr = this.persons.filter((p)=>{
+                        return p.name.indexOf(this.searchName) != -1
+                    })
+                    if (this.sortType) {
+                        arr.sort((x,y)=>{
+                            return this.sortType == 2 ? x.age-y.age : y.age-x.age
+                        })
+                    }
+                    return arr
+                }
+            }
+        })
+    </script>
+</body>
+</html>

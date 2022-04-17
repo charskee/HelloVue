@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>明星列表</h1>
+        <input type="text" placeholder="请输入名字搜索" v-model="searchName" @keydown.enter="search">
+        <button @click="search">搜索</button>
+        <ul>
+            <li v-for="person in filPersons" :key="person.id">{{person.name}}-{{person.age}}</li>
+        </ul>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    { id: "001", name: "周杰伦", age: 19 },
+                    { id: "002", name: "温兆伦", age: 20 },
+                    { id: "003", name: "马冬梅", age: 21 },
+                    { id: "004", name: "周冬雨", age: 21 },
+                ],
+                searchName:''
+                // filPersons: []
+            },
+            watch: {
+                // watch监听实现  思路 当监听的搜索框的val发生变化时 拿着val去匹配数据
+                // searchName: {
+                    // 为什么调用一次就会显示？ 初始化调用一次的时候 val是空字符串 p.name.indexOf(空字符串) 是等于0 所以所有都符合
+                    // immediate:true,
+                    // handler(val){
+                    //     this.filPersons = this.persons.filter((p)=>{
+                    //         return p.name.indexOf(val) != -1
+                    //     })
+                    // }
+                // }
+            },
+            methods: {
+                //点击搜索实现 思路 当点击搜索按钮的时候 拿到搜索框的value 去匹配数据
+                search() {
+                    this.filPersons = this.persons.filter((p) => {
+                        return p.name.indexOf(this.searchName) != -1
+                    })
+                }
+            },
+            computed:{
+                // 计算属性实现  当计算属性所依赖的属性(搜索框的内容)发生变化时 拿到搜索框的内容去匹配数据
+                filPersons(){
+                    console.log('我被调用了');
+                    return this.persons.filter((p)=>{
+                        return p.name.indexOf(this.searchName) != -1
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

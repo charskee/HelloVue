@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <div id="root">
+        <h1>明星列表</h1>
+        <button @click="addStar">点击添加一个明星</button>
+        <ul>
+            <li v-for="person in persons" :key="person.id">{{person.name}}-{{person.age}}</li>
+        </ul>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        new Vue({
+            el:'#root',
+            data:{
+                persons: [
+                    { id: "001", name: "周杰伦", age: 1 },
+                    { id: "002", name: "温兆伦", age: 3 },
+                    { id: "003", name: "马冬梅", age: 4 },
+                    { id: "004", name: "周冬雨", age: 2 },
+                ],
+            },
+            watch: {
+
+            },
+            methods: {
+                addStar(){
+                    this.persons[3].id = '006'
+                    this.persons[3].name = '方世玉'
+                    this.persons[3].age = 7
+
+                    // this.persons[4] = { id: "006", name: "方世玉", age: 5 } // 不奏效
+                    // this.persons.push({ id: "006", name: "方世玉", age: 5 }) // 奏效
+                }
+            },
+            computed:{
+
+            }
+        })
+    </script>
+</body>
+</html>

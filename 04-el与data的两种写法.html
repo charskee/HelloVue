@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='./js/vue.js'></script>
+</head>
+<body>
+    <div id="root">
+        <h3>Hello {{name}}!</h3>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        /*
+            data与el的2种写法
+                el：
+                    1. new Vue的时候配置el属性
+                    2. 先创建Vue实例，随后在通过vm.$mount('#root')指定el的值
+                data：
+                    1. 对象式
+                    2. 函数式
+                    如何选择：目前随便 学到组件必须用函数式
+                注意⚠️ 一个重要的原则：
+                    由Vue管理的函数，一定不要写箭头函数，一旦写了箭头函数，this就不再是Vue实例了
+        */
+
+        /*
+        const vm = new Vue({
+            // el的第一种写法
+            // el:'#root',
+            data:{
+                name:"chars"
+            }
+        })
+        console.log(vm);
+        // el的第二种写法
+        vm.$mount('#root')
+        */
+        
+        new Vue({
+            el:'#root',
+            // data的第一种写法 直接写一个对象
+            // data:{
+            //     name:"chars"
+            // }
+            // data的第一种写法 写一个匿名函数 返回一个对象
+            data:function(){
+                // 注意不能用箭头函数 否则会丢失vue的this指向
+                console.log(this);
+                return{
+                    name:"chars"
+                }
+            }
+        })
+    </script>
+</body>
+</html>
