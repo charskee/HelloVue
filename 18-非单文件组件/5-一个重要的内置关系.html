@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        1.一个重要的内置关系 VueComponent.prototype.__proto__ === Vue.prototype
+        2.为什么要有这个关系：让组件实例对象 vc 可以访问到Vue原型上的属性和方法
+    -->
+    <div id="root">
+        <!-- // 使用组件 -->
+        <school></school>
+        <button @click="create">点我创建一个组件</button>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        // 第一步 创建组件
+        const school = Vue.extend({
+            template:`
+            <div>
+                <h3>学校名称:{{name}}</h3>
+                <h3>学校地址:{{address}}</h3>
+                <button @click="test">组件this指向</button>
+            </div>
+            `,
+            data(){
+                return {
+                    name:"新垌第一中学",
+                    address:"广东茂名高州"
+                }
+            },
+            methods: {
+                test(){
+                    console.log(this);
+                }
+            },
+        })
+        const vm = new Vue({
+            el:'#root',
+            // 第二步 注册组件
+            components:{
+                school
+            },
+            methods: {
+                create(){
+                    
+                    // this.$el.append(this.$children[0])
+                    console.log(this);
+                    console.log(this.$children[0] instanceof HTMLElement);
+                }
+            },
+        })
+
+        // 定义一个构造函数
+        function Demo(){
+            this.x = 10,
+            this.y = 20
+        }
+        // 创建一个Demo的实例对象
+        const d = new Demo()
+
+        console.log(Demo.prototype); // 显示原型属性 
+        console.log(d.__proto__); // 隐式原型属性
+        console.log(d);
+    </script>
+</body>
+</html>

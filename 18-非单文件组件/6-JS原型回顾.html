@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        class Person{
+            constructor(name){
+                this.name = name
+            }
+            drink(){
+                console.log(this.name + '咕噜咕噜喝水');
+            }
+        }
+        class Teacher extends Person{
+            constructor(name,object){
+                super(name)
+                this.object = object
+            }
+            teach(){
+                console.log('我是'+this.name + ',我教' +this.object);
+            }
+        }
+        class Student{
+            constructor(name,score){
+                this.name = name,
+                this.score =score
+            }
+            introduce(){
+                console.log('我是'+this.name + ',我考了' +this.score);
+            }
+        }
+        const student = new Student('chars',99)
+        const teacher = new Teacher('tieniu','iOS')
+
+        student.introduce()
+        teacher.teach()
+        teacher.drink()
+
+        // 定义一个构造函数
+        function Demo(){
+            this.x = 10,
+            this.y = 20,
+            this.sayHi = function(){
+                console.log('Hello everybody');
+            }
+        }
+        // 创建一个Demo的实例对象
+        const d = new Demo()
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+
+<body>
+    <div id="root" :n="n">
+        <h1>Hello {{name}}!</h1>
+        <h2>当前的n值是:{{n}}</h2>
+        <button @click="add">n++</button>
+        <button @click="bye">点我销毁vm</button>
+        
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            // el:'#root',
+            // template: `<div>
+            //             <h1>Hello {{name}}!</h1>
+            //             <h2>当前的n值是:{{n}}</h2>
+            //             <button @click="add">n++</button>
+            //         </div>`,
+            data: {
+                name: "chars",
+                n: 8
+            },
+            methods: {
+                add() {
+                    let str = '张学友'
+                    this.n++
+                    return str
+                },
+                bye(){
+                    console.log('goodbye');
+                    this.$destroy()
+                    console.log(this);
+                    this.n++
+                }
+            },
+            // 创建阶段 第一个生命周期钩子 这里无法访问data和methods 开发中几乎不会用到
+            beforeCreate() {
+                console.log('beforeCreate');
+                // console.log(this);
+                // console.log(this.name); // undefined
+                // debugger
+            },
+            // 创建阶段 第二个生命周期钩子 可以访问到data数据和methods方法 开发中很常用
+            // 典型的应用场景： 在created中调用methods中的函数，发起ajax请求，获取服务端的数据，
+            // 然后把请求到的数据，转存到data中，供页面渲染使用
+            created() {
+                console.log('created');
+                // console.log(this);
+                const str = this.add()
+                this.name = str
+
+            },
+            // 创建阶段 第三个生命周期钩子 此时Vue已经完成构建虚拟DOM 即将把内存中的UI结构 渲染到浏览器中
+            // 因此在beforeMount这个函数中 无法访问到真实的DOM元素 即使操作了DOM元素 DOM元素最后也不会受影响
+            // 因为下一步 Vue就会把构建好的虚拟DOM替换真实DOM渲染到页面中 然后调用第4个生命周期钩子
+            beforeMount() {
+                console.log('beforeMount');
+                // debugger
+            },
+            // 创建阶段 第四个生命周期钩子 此时Vue已经完成了UI结构的渲染 浏览器的页面中已经有了对应的DOM元素
+            // 因此在实际开发中 要想操作当前组件的DOM元素，必须在mounted中执行 比如开启一个定时器操作DOM
+            // 至此创建阶段已完成 
+            mounted() {
+                console.log('mounted',this.$el instanceof HTMLElement);
+            },
+            // 当data数据变化 自动执行更新DOM的操作
+            // 在beforeUpdate函数中，data中的数据是最新的，但是页面中的UI结构是旧的
+            // beforeUpdate表示将要更新DOM元素 但是还没有开始更新 
+            beforeUpdate() {
+                console.log('beforeUpdate')
+                
+            },
+            // updated表示DOM已经更新完毕了 data数据是最新的 页面上的DOM元素内容也是最新的
+            updated() {
+                console.log('updated')
+            },
+            // 组件被销毁时 会执行这个生命周期函数
+            // 此时vm中所有的：data。methods 指令等等都处于可用状态 马上要执行销毁流程
+            // 一般在此阶段： 关闭定时器 取消订阅消息 解绑自定义事件等收尾操作
+            beforeDestroy() {
+                console.log('beforeDestroy')
+            },
+            // 组件完成了销毁
+            destroyed() {
+                console.log('destroyed')
+            },
+        })
+        vm.$mount('#root')
+    </script>
+</body>
+
+</html>

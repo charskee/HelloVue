@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+        几个注意点：
+            1.关于组件名
+                一个单词组成：
+                    第一种写法（首字母小写）：school
+                    第二种写法（首字母大写）：School
+                多个单词组成：
+                    第一种写法（kebab-case）：my-school
+                    第二种写法（CamelCase）：MySchool （需要脚手架支持）
+                备注：
+                    （1）组件名尽可能回避HTML中已有的元素名称，例如 h1，H2 都不行
+                    （2）可以使用name配置项指定组件在开发者工具中呈现的名字
+            2.关于组件标签：
+                第一种写法：<School></School>
+                第二种写法：<School/>
+                备注： 不使用脚手架时，第二种写法会导致后续组件不能渲染
+            3.一个简写方式
+                const School = Vue.extend(options) 可简写为 const School = {options}
+    -->
+    <div id="root">
+        <!-- // 使用组件 -->
+        <School></School>
+        <hr>
+        <Student></Student>
+        <hr>
+        <Firends></Firends>
+        <hr>
+        <Hobby></Hobby>
+    </div>
+    
+    <div id="root2">
+        <hr>
+        <Firends></Firends>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        // 第一步 创建组件
+        const School = Vue.extend({
+            template:`
+            <div>
+                <h3>学校名称:{{name}}</h3>
+                <h3>学校地址:{{address}}</h3>
+            </div>
+            `,
+            data(){
+                return {
+                    name:"新垌第一中学",
+                    address:"广东茂名高州"
+                }
+            }
+        })
+        const Student = Vue.extend({
+            template:`
+            <div>
+                <h3>学生名字:{{name}}</h3>
+                <h3>学生年龄:{{age}}</h3>
+            </div>
+            `,
+            data(){
+                return {
+                    name:"袁婷婷",
+                    age:"18"
+                }
+            }
+        })
+        const Firends = Vue.extend({
+            template:`
+            <div>
+                <h3>朋友们</h3>
+            <ul>
+                <li v-for="(friend,index) in friendsList" :key="index">{{friend}}</li>
+            </ul>
+            </div>`,
+            data(){
+                return {
+                    friendsList:['邓巧平','邓源颖','吕旭萍']
+                }
+            }
+
+        })
+        // 组件简写
+        const Hobby = {
+            template:`<h1>{{msg}}</h1>`,
+            data(){
+                return {
+                    msg:"好好学习 天天向上"
+                }
+            }
+        }
+        // 第二步 注册全局组件
+        Vue.component('Firends',Firends)
+
+        new Vue({
+            el:'#root',
+            data:{
+                name:"chars"
+            },
+            // 第二步 注册组件
+            components:{
+                School,
+                Student,
+                Hobby
+            }
+        })
+
+        new Vue({
+            el:'#root2',
+            data:{
+                name:"kee"
+            }
+        })
+    </script>
+</body>
+</html>

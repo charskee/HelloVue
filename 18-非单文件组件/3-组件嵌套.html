@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type='text/javascript' src='../js/vue.js'></script>
+</head>
+<body>
+    <!-- 
+    -->
+    <div id="root">
+        <!-- // 使用组件 -->
+        <App></App>
+    </div>
+    <script type='text/javascript'>
+        Vue.config.productionTip = false
+        
+        // 第一步 创建组件
+        const School = Vue.extend({
+            template:`
+            <div>
+                <h3>学校名称:{{name}}</h3>
+                <h3>学校地址:{{address}}</h3>
+            </div>
+            `,
+            data(){
+                return {
+                    name:"新垌第一中学",
+                    address:"广东茂名高州"
+                }
+            }
+        })
+        const Firends = Vue.extend({
+            template:`
+            <div>
+                <h3>朋友们</h3>
+            <ul>
+                <li v-for="(friend,index) in friendsList" :key="index">{{friend}}</li>
+            </ul>
+            </div>`,
+            data(){
+                return {
+                    friendsList:['邓巧平','邓源颖','吕旭萍']
+                }
+            }
+
+        })
+        const Student = Vue.extend({
+
+            template:`
+            <div>
+                <h3>学生名字:{{name}}</h3>
+                <h3>学生年龄:{{age}}</h3>
+                <Firends></Firends>
+            </div>
+            `,
+            data(){
+                return {
+                    name:"袁婷婷",
+                    age:"18"
+                }
+            },
+            components:{
+                Firends
+            }
+        })
+
+        const App = {
+            template:`
+            <div>
+                <School></School>
+                <hr>
+                <Student></Student>
+            </div>
+            `,
+            components:{
+                School,
+                Student
+            }
+        }
+        
+        new Vue({
+            el:'#root',
+            // 第二步 注册组件
+            components:{
+                App
+            }
+        })
+    </script>
+</body>
+</html>
